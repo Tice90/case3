@@ -83,7 +83,7 @@ df3['NotChargeTime'] = df3['ConnectedTime'] - df3['ChargeTime']
 #----------------------------------------------------------------
 #streamlit app maken 
 #----------------------------------------------------------------
-page = st.sidebar.selectbox("Select a Page",['Oplaadtijd Laadpalen', "Elektrische Auto's", 'Info auto'])
+page = st.sidebar.selectbox("Select a Page",['Oplaadtijd Laadpalen', "Elektrische Auto's", 'Laadpalen in Nederland'])
 
 if page == 'Oplaadtijd Laadpalen':
     st.title('Laadpalen dataonderzoek')
@@ -435,5 +435,7 @@ if page == "Elektrische Auto's":
         # Toon de Plotly Express figuur in Streamlit
         st.plotly_chart(fig)
         
-
+if page == 'Laadpalen in Nederland':
+    st.title("---------------")
+    st.subheader("-----------------")
 
