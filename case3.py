@@ -45,44 +45,40 @@ df = load_and_preprocess_data()
 #--------------------------------------------------------
 #laadpalendata
 #--------------------------------------------------------
-@st.cache_data
-def load_and_preprocess_data3():
-    df3 = pd.read_csv('laadpaaldata.csv')
-    df3.head()
 
-    df3.info()
+df3 = pd.read_csv('laadpaaldata.csv')
+df3.head()
 
-    #datum 2018-02-29 omzetten naar NaT, 2018 geen schrikkeljaar. 
-    df3['Started'] = pd.to_datetime(df3['Started'], errors='coerce')
-    df3['Ended'] = pd.to_datetime(df3['Ended'], errors='coerce')
+df3.info()
+
+#datum 2018-02-29 omzetten naar NaT, 2018 geen schrikkeljaar. 
+df3['Started'] = pd.to_datetime(df3['Started'], errors='coerce')
+df3['Ended'] = pd.to_datetime(df3['Ended'], errors='coerce')
 
 
-    #'Started' en 'Ended' naar datetime omzetten
-    df3['Started'] = pd.to_datetime(df3['Started'])
-    df3['Ended'] = pd.to_datetime(df3['Ended'])
+#'Started' en 'Ended' naar datetime omzetten
+df3['Started'] = pd.to_datetime(df3['Started'])
+df3['Ended'] = pd.to_datetime(df3['Ended'])
 
-    #Extra kollom maken voor het uur van de dag
-    df3['HourOfDay'] = df3['Started'].dt.hour
+#Extra kollom maken voor het uur van de dag
+df3['HourOfDay'] = df3['Started'].dt.hour
 
-    #Verwijder rijen met negatieve waarden
-    df3 = df3[df3['ChargeTime'] >= 0]
+#Verwijder rijen met negatieve waarden
+df3 = df3[df3['ChargeTime'] >= 0]
 
-    df3['Weekday'] = df3['Started'].dt.day_name()
+df3['Weekday'] = df3['Started'].dt.day_name()
 
-    df3['Weekday'].describe()
+df3['Weekday'].describe()
 
-    df3['TotalEnergy (kwh)'] = df3['TotalEnergy'] / 1000
-    df3.head()
+df3['TotalEnergy (kwh)'] = df3['TotalEnergy'] / 1000
+df3.head()
 
-    #de snelheid wordt berekend door de totale energie te delen door de oplaadtijd.
-    df3['ChargeSpeed'] =  df3['TotalEnergy (kwh)'] / df3['ChargeTime'] 
+#de snelheid wordt berekend door de totale energie te delen door de oplaadtijd
+df3['ChargeSpeed'] =  df3['TotalEnergy (kwh)'] / df3['ChargeTime'] 
 
-    # niet opgeladen tijd kijken
-    df3['NotChargeTime'] = df3['ConnectedTime'] - df3['ChargeTime']
+# niet opgeladen tijd kijken
+df3['NotChargeTime'] = df3['ConnectedTime'] - df3['ChargeTime']
 
-    return df3
-
-df3 = load_and_preprocess_data3()
 
 #----------------------------------------------------------------
 #streamlit app maken 
