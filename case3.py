@@ -40,21 +40,8 @@ df = load_and_preprocess_data()
 #--------------------------------------------------------
 #openchargemap
 #--------------------------------------------------------
-@st.cache_data
-def load_and_preprocess_data2():
-
-#geodataframe nederland inladen
-gdf = gpd.GeoDataFrame.from_file("provinces.geojson")
-
-#postcodes inladen
-df_post= pd.read_excel('provincie en postcodes.xlsx')
 
 
-
-
-return df2,
-
-df2 = load_and_preprocess_data3()
 #--------------------------------------------------------
 #laadpalendata
 #--------------------------------------------------------
