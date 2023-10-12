@@ -131,7 +131,7 @@ if page == 'Oplaadtijd Laadpalen':
         hist_data = []
         group_labels = []
 
-        for day in df['Weekday'].unique():
+        for day in df3['Weekday'].unique():
             charge_times_day = df3[df3['Weekday'] == day]['ChargeTime']
             if not charge_times_day.empty:
                 hist_data.append(charge_times_day)
@@ -160,7 +160,7 @@ if page == 'Oplaadtijd Laadpalen':
         st.write("Hier wordt de kansdichtheid weergegeven voor de aantal uur dat er een laadpaal aangesloten is maar niet gebruikt wordt.")
 
         # Assuming df is your DataFrame and 'ChargeTime' is the column of interest
-        df_CHT = df[df['NotChargeTime'] > 0]
+        df_CHT = df3[df3['NotChargeTime'] > 0]
         not_charge_times = df_CHT['NotChargeTime']
 
         #Create KDE plot for ChargeTime
@@ -192,7 +192,7 @@ if page == 'Oplaadtijd Laadpalen':
         group_labels = []
 
         for day in df['Weekday'].unique():
-            charge_times_day = df[df['Weekday'] == day]['ChargeTime']
+            charge_times_day = df3[df3['Weekday'] == day]['ChargeTime']
             if not charge_times_day.empty:
                 hist_data.append(charge_times_day)
                 group_labels.append(day)
@@ -216,7 +216,7 @@ if page == 'Oplaadtijd Laadpalen':
     with tab3:
         st.subheader("Relatie tussen max vermogen en de oplaadsnelheid in uren.")
         st.write("Hier wordt een scatter plot weergegeven van de oplaadsnelheid in uren t.o.v de maximale vermogen.")
-        fig2 = px.scatter(df, x='MaxPower', y='ChargeSpeed', color='Weekday',
+        fig2 = px.scatter(df3, x='MaxPower', y='ChargeSpeed', color='Weekday',
                  title='Charge Speed vs Max Power with Trendline by Weekday')
         st.plotly_chart(fig2)
 
