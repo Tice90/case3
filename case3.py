@@ -4,6 +4,7 @@ import seaborn as sns
 import plotly.express as px
 import streamlit as st
 import plotly.figure_factory as ff
+import geopandas as gdf
 
 #--------------------------------------------------------
 #RdW data
