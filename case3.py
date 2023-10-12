@@ -4,6 +4,11 @@ import seaborn as sns
 import plotly.express as px
 import streamlit as st
 import plotly.figure_factory as ff
+import geopandas as gpd
+import folium
+from folium.plugins import HeatMap
+import requests
+import json
 
 #--------------------------------------------------------
 #RdW data
@@ -83,7 +88,7 @@ df3['NotChargeTime'] = df3['ConnectedTime'] - df3['ChargeTime']
 #----------------------------------------------------------------
 #streamlit app maken 
 #----------------------------------------------------------------
-page = st.sidebar.selectbox("Select a Page",['Oplaadtijd Laadpalen', "Elektrische Auto's", 'Laadpalen in Nederland'])
+page = st.sidebar.selectbox("Select a Page",['Oplaadtijd Laadpalen', "Elektrische Auto's", 'O.C.M.'])
 
 if page == 'Oplaadtijd Laadpalen':
     st.title('Laadpalen dataonderzoek')
@@ -435,7 +440,215 @@ if page == "Elektrische Auto's":
         # Toon de Plotly Express figuur in Streamlit
         st.plotly_chart(fig)
         
-if page == 'Laadpalen in Nederland':
-    st.title("---------------")
-    st.subheader("-----------------")
+if page == "O.C.M.":
+    st.title("Open charge map api")
 
+    st.subheader("Hieronder laden we een API in en zetten deze om naar een bruikbare Pandas DataFrame. Daarnaast maken we gebruik van GeoPandas en een zelfgemaakte Excel-sheet om de data te transformeren, waardoor we in staat zijn bepaalde conclusies te trekken.")
+
+
+#     response= requests.get("https://api.openchargemap.io/v3/poi/?output=json&countrycode=NL&maxresults=10000&compact=true&verbose=false&key=4308c1bf-a620-4b40-bc6f-0bf156d35d61")
+
+
+#     # In[44]:
+
+
+#     responsejson = response.text
+
+
+
+#     # In[45]:
+
+
+#     d = json.loads(responsejson)
+#     pd.json_normalize(d)
+
+
+#     # In[46]:
+
+
+#     Laadpalen = pd.json_normalize(d)
+#     df4 = pd.json_normalize(Laadpalen.Connections)
+#     df5 = pd.json_normalize(df4[0])
+#     Laadpalen = pd.concat([Laadpalen, df5], axis=1)
+#     Laadpalen.head()
+
+
+#     # In[47]:
+
+
+#     gdf = gpd.GeoDataFrame.from_file("provinces.geojson")
+
+
+#     # In[48]:
+
+
+
+
+#     # Hierboven hebben we alle data ingeladen en geanalyseerd. Ook hebben we om de data bruibaar te maken een geopanda dataframe ingeladen om zo de postcodes aan provincies te koppelen.
+#     # 
+
+#     # In[49]:
+
+
+#     Laadpalen['postcode_without_letters'] = Laadpalen['AddressInfo.Postcode'].str.extract(r'(\d+)')
+#     Laadpalen.head()
+
+
+#     # In[50]:
+
+
+#     df_post= pd.read_excel('provincie en postcodes.xlsx')
+
+
+#     # In[51]:
+
+
+#     df_post = pd.DataFrame(df_post)
+#     df_post.head()
+
+
+#     # In[52]:
+
+
+#     Laadpalen = pd.merge(Laadpalen, df_post, left_on="postcode_without_letters", right_on=df_post['postcode'].astype(str), how='left')
+
+
+#     # Hierna hebben we de data verder bekeken en ingezoemd op de postcodes aangezien veel andere columns een hoop na waardes hadden.
+
+
+
+#     Laadpalen['provincie'].dropna()
+
+
+#     # In[55]:
+
+
+#     Laadpalen[Laadpalen['AddressInfo.Postcode'].isna()]
+
+
+#     # In[56]:
+
+
+#     Laadpalen['AddressInfo.Postcode'].dropna()
+
+
+#     # In[57]:
+
+
+#     Aantal_Laadpalen_provincie = Laadpalen.value_counts(["provincie"])
+#     Aantal_Laadpalen_provincie = Aantal_Laadpalen_provincie.reset_index()
+#     Aantal_Laadpalen_provincie = Aantal_Laadpalen_provincie.rename(columns={0: 'Aantal_Laadpalen'})
+#     Aantal_Laadpalen_provincie = Aantal_Laadpalen_provincie.sort_values('provincie')
+
+#     Aantal_Laadpalen_provincie['provincie'].replace(['Friesland'],'Friesland (Fryslân)', inplace=True)
+
+
+
+#     # In[58]:
+
+
+#     merged_df = Aantal_Laadpalen_provincie.merge(gdf, left_on='provincie', right_on='name')
+
+
+#     # In[59]:
+
+
+#     geojson = px.data.election_geojson()
+#     # geojson
+
+
+#     # In[60]:
+
+
+#     import geopandas as gpd
+
+#     merged_gdf = gpd.GeoDataFrame(merged_df, geometry='geometry')
+#     merged_gdf.head()
+
+
+#     # In[61]:
+
+
+#     print(merged_gdf.columns)
+
+
+#     # de geopanda dataframe samengevoegd met de laadpalen per provincie om zo een plot te kunnen laten zien van hoeveel laadpalen per provincie. hieronder dan ook een folium heatmap ter verduidelijking waar de meeste laadpalen zich bevinden. en de choropleth eronder om zo het verschil in provincie te laten zien.
+
+#     # In[62]:
+
+
+#     import folium
+#     from folium.plugins import HeatMap
+
+#     # Create a map centered around the Netherlands
+#     m = folium.Map(location=[52.1326, 5.2913], zoom_start=7)
+
+#     # Create a HeatMap layer with a different color scheme
+#     heat_data = Laadpalen[['AddressInfo.Latitude', 'AddressInfo.Longitude']].dropna().values
+#     HeatMap(heat_data, gradient={0.2: 'green', 0.4: 'yellow', 0.6: 'orange', 1: 'red'}, min_opacity=0.3, max_val=2000, radius=7, blur=10, max_zoom=1).add_to(m)
+
+#     # Convert Folium map to HTML string
+#     m = m._repr_html_()
+
+#     # Use the Streamlit html component to display the Folium map
+#     st.components.v1.html(m, width=800, height=600)
+
+
+#     # In[63]:
+
+
+#     fig = px.choropleth_mapbox(merged_gdf, geojson=gdf.geometry, locations=gdf.index, color='Aantal_Laadpalen',
+#                                color_continuous_scale="Viridis",
+#                                # range_color=(0, 12),
+#                                mapbox_style="carto-positron",
+#                                # featureidkey="properties.provincie",
+#                                zoom=7, center = {"lat": 52.1326, "lon": 5.2913},
+#                                opacity=0.5,
+#                                labels={'unemp':'unemployment rate'}
+#                               )
+#     st.plotly_chart(fig)
+    def get_data():
+        response = requests.get("https://api.openchargemap.io/v3/poi/?output=json&countrycode=NL&maxresults=10000&compact=true&verbose=false&key=4308c1bf-a620-4b40-bc6f-0bf156d35d61")
+        data = json.loads(response.text)
+        return pd.json_normalize(data)
+
+    def prepare_data(Laadpalen):
+        Laadpalen['postcode_without_letters'] = Laadpalen['AddressInfo.Postcode'].str.extract(r'(\d+)')
+        df_post = pd.read_excel('provincie en postcodes.xlsx')
+        return pd.merge(Laadpalen, df_post, left_on="postcode_without_letters", right_on=df_post['postcode'].astype(str), how='left')
+
+    def count_charging_stations_by_province(Laadpalen):
+        counts = Laadpalen.value_counts(["provincie"])
+        counts = counts.reset_index().rename(columns={0: 'Aantal_Laadpalen'})
+        counts['provincie'].replace(['Friesland'],'Friesland (Fryslân)', inplace=True)
+        return counts
+
+    def render_map(Laadpalen):
+        m = folium.Map(location=[52.1326, 5.2913], zoom_start=7)
+        heat_data = Laadpalen[['AddressInfo.Latitude', 'AddressInfo.Longitude']].dropna().values
+        HeatMap(heat_data, gradient={0.2: 'green', 0.4: 'yellow', 0.6: 'orange', 1: 'red'}, min_opacity=0.3, max_val=2000, radius=7, blur=10, max_zoom=1).add_to(m)
+        return m._repr_html_()
+
+    def main():
+
+        Laadpalen = get_data()
+        Laadpalen = prepare_data(Laadpalen)
+        gdf = gpd.GeoDataFrame.from_file("provinces.geojson")
+
+        counts = count_charging_stations_by_province(Laadpalen)
+        merged_gdf = gpd.GeoDataFrame(gdf.merge(counts, left_on='name', right_on='provincie'), geometry='geometry')
+
+        m = render_map(Laadpalen)
+        st.components.v1.html(m, width=800, height=600)
+
+        st.write("De Geopanda Dataframe samengevoegd met de laadpalen per provincie om zo met een choropleth plot te kunnen laten zien hoeveel laadpalen per provincie er zijn.")
+        
+        fig = px.choropleth_mapbox(merged_gdf, geojson=gdf.geometry, locations=gdf.index, color='count',
+                                   color_continuous_scale="Viridis",
+                                   mapbox_style="carto-positron",
+                                   zoom=5, center = {"lat": 52.1326, "lon": 5.2913},
+                                   opacity=0.5)
+        st.plotly_chart(fig)
+
+    if __name__ == '__main__':
+        main()
