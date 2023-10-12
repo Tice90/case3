@@ -6,3 +6,5 @@ numpy==1.26.0
 streamlit==1.27.0
 plotly==5.17.0
 geopandas==0.14.0
+scipy==1.11.3
+
