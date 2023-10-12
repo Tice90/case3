@@ -187,7 +187,7 @@ if page == 'Oplaadtijd Laadpalen':
         hist_data = []
         group_labels = []
 
-        for day in df['Weekday'].unique():
+        for day in df3['Weekday'].unique():
             charge_times_day = df3[df3['Weekday'] == day]['ChargeTime']
             if not charge_times_day.empty:
                 hist_data.append(charge_times_day)
