@@ -341,7 +341,7 @@ if page == "Elektrische Auto's":
 
         Het histogram wijst uit dat de meerderheid van de elektrische auto's een catalogusprijs heeft tussen de €30,000 en €65,000. Daarnaast toont de lijngrafiek dat elektrische auto's gemiddeld het duurst waren in 2016, met een prijs van meer dan €75,000. We merken echter een scherpe daling in de prijzen na 2018, wat grotendeels kan worden verklaard door de introductie van het goedkopere Tesla Model 3.
 
-        Ten slotte biedt de scatterplot aanvullende inzichten, vooral als je filtert op merk. Zo kun je de ontwikkeling volgen van hoe fabrikanten met de tijd verschillende modellen op de markt hebben gebracht, elk in een duidelijk verschillende prijsklasse.
+        Ten slotte biedt de scatterplot aanvullende inzichten. Ten eerste kun je de ontwikkeling volgen van hoe fabrikanten met de tijd verschillende modellen op de markt hebben gebracht, elk in een duidelijk verschillende prijsklasse. Ten tweede zien we dat auto-registraties doorgaans in cycli van vier keer per jaar gebeuren, met een duidelijke toename aan het einde van elk jaar. Ten derde wordt zichtbaar dat 2019 een kantelpunt vormt in de markt: vanaf dit moment werd het aanbod in de middenprijsklasse aanzienlijk uitgebreid, waardoor consumenten niet langer alleen de keuze hadden tussen budget- en premiummodellen.
         """)
 
 
