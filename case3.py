@@ -10,8 +10,9 @@ import plotly.figure_factory as ff
 #--------------------------------------------------------
 @st.cache_data
 def load_and_preprocess_data():
-    df = pd.read_csv('elektrischvervoer_df.csv')
-    df = df[['Kenteken', 'Merk', 'Handelsbenaming', 'Inrichting', 'Eerste kleur', 'Catalogusprijs', 'Lengte', 'Breedte', 'Datum eerste tenaamstelling in Nederland DT']]
+    df = pd.read_csv('elektrischvervoer_filtered.csv')
+    # Code waarmee het is gefilterd
+    #df = df[['Kenteken', 'Merk', 'Handelsbenaming', 'Catalogusprijs', 'Datum eerste tenaamstelling in Nederland DT']]
     df['Datum eerste tenaamstelling in Nederland DT'] = pd.to_datetime(df['Datum eerste tenaamstelling in Nederland DT'])
     df = df[df['Datum eerste tenaamstelling in Nederland DT'].dt.year > 2012]
     
