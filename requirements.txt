@@ -10,4 +10,3 @@ scipy==1.11.3
 folium
 openpyxl
 requests
-json
