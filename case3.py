@@ -93,7 +93,7 @@ if page == 'Oplaadtijd Laadpalen':
     st.title('Laadpalen dataonderzoek')
     st.write("Op deze pagina wordt onderzoek gedaan naar de relaties tussen de oplaadtijden, oplaadsnelheden en de maximale oplaadvermogen van auto's")
     
-    tab1, tab2,tab3 = st.tabs(["Oplaadtijd vs uur per dag", "Niet-opgeladen tijd vs uur per dag", "Oplaad snelheid vs Maximale vermogen"])
+    tab1, tab2, tab3 = st.tabs(["Oplaadtijd vs uur per dag", "Niet-opgeladen tijd vs uur per dag", "Oplaad snelheid vs Maximale vermogen"])
     with tab1:
         st.title("Onderzoek naar laadpalen")
         st.subheader("kansdichthied tussen de oplaadtijd per uur van de dag")
@@ -153,8 +153,8 @@ if page == 'Oplaadtijd Laadpalen':
         else:
             print('No data available to create distplots.')
 
-       
-     with tab2:
+    
+    with tab2:
         st.title("Onderzoek naar laadpalen")
         st.subheader("kansdichtheid niet-gebruikte laadpalen")
         st.write("Hier wordt de kansdichtheid weergegeven voor de aantal uur dat er een laadpaal aangesloten is maar niet gebruikt wordt.")
