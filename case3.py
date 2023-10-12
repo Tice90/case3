@@ -99,7 +99,7 @@ if page == 'Oplaadtijd Laadpalen':
         st.subheader("kansdichthied tussen de oplaadtijd per uur van de dag")
         st.write("Hier wordt de kansdichtheid weergegeven voor de oplaadtijd in uren.")
 
-        df_chargetimes = df[df['ChargeTime'] <= 24]
+        df_chargetimes = df3[df3['ChargeTime'] <= 24]
 
         # Assuming df is your DataFrame and 'ChargeTime' is the column of interest
         charge_times = df_chargetimes['ChargeTime']
