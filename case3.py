@@ -120,7 +120,7 @@ if page == 'Oplaadtijd Laadpalen':
         fig4.update_layout(
             title='Histogram of Charging Time',
             xaxis_title='Charging Time (hours)',
-            yaxis_title='Count'
+            yaxis_title='Density'
         )
         # Show the plot
         st.plotly_chart(fig4)
@@ -179,7 +179,7 @@ if page == 'Oplaadtijd Laadpalen':
         fig4.update_layout(
             title='Histogram of Not Charging Time',
             xaxis_title='Not Charging Time (hours)',
-            yaxis_title='Count'
+            yaxis_title='Density'
         )
         # Show the plot
         st.plotly_chart(fig4)
@@ -193,9 +193,9 @@ if page == 'Oplaadtijd Laadpalen':
         group_labels = []
 
         for day in df3['Weekday'].unique():
-            charge_times_day = df3[df3['Weekday'] == day]['ChargeTime']
-            if not charge_times_day.empty:
-                hist_data.append(charge_times_day)
+            not_charge_times_day = df3[df3['Weekday'] == day]['NotChargeTime']
+            if not not_charge_times_day.empty:
+                hist_data.append(not_charge_times_day)
                 group_labels.append(day)
 
         # Create distplots for each weekday if there's data
@@ -204,8 +204,8 @@ if page == 'Oplaadtijd Laadpalen':
 
             # Update layout
             fig.update_layout(
-                title='Distribution of Charging Time by Weekday',
-                xaxis_title='Charging Time (hours)',
+                title='Distribution of No Charging Time by Weekday',
+                xaxis_title='No Charging Time (hours)',
                 yaxis_title='Density'
             )
 
