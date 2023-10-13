@@ -97,7 +97,7 @@ if page == 'Oplaadtijd Laadpalen':
     tab1, tab2, tab3 = st.tabs(["Oplaadtijd vs uur per dag", "Niet-opgeladen tijd vs uur per dag", "Oplaad snelheid vs Maximale vermogen"])
     with tab1:
         st.title("Onderzoek naar laadpalen")
-        st.subheader("kansdichthied tussen de oplaadtijd per uur van de dag")
+        st.subheader("kansdichtheid tussen de oplaadtijd per uur van de dag")
         st.write("Hier wordt de kansdichtheid weergegeven voor de oplaadtijd in uren.")
 
         df_chargetimes = df3[df3['ChargeTime'] <= 24]
@@ -168,8 +168,8 @@ if page == 'Oplaadtijd Laadpalen':
         fig4 = ff.create_distplot([not_charge_times], ['NotChargeTime'], colors=['blue'])
 
         # Calculate mean and median
-        mean_not_charge_time = charge_times.mean()
-        median_not_charge_time = charge_times.median()
+        mean_not_charge_time = not_charge_times.mean()
+        median_not_charge_time = not_charge_times.median()
 
         # Add vertical lines for mean and median
         fig4.add_vline(x=mean_not_charge_time, line_dash="dash", line_color="red", annotation_text=f'Mean: {mean_not_charge_time:.2f} hours', annotation_position="top right")
